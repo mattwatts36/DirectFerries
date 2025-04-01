@@ -40,7 +40,7 @@ public class ProductService
     }
 
 
-    public async Task UpdateTopThreeMostExpensiveProducts(List<Product> top3)
+    public async Task UpdateTopThreeMostExpensiveProducts(List<Product> topThreeMostExpensiveProducts)
     {
         Console.WriteLine("\nEnter percentage to increase prices:");
         var percentStr = Console.ReadLine();
@@ -50,7 +50,7 @@ public class ProductService
             return;
         }
 
-        foreach (var phone in top3)
+        foreach (var phone in topThreeMostExpensiveProducts)
         {
             var newPrice = phone.Price * (1 + percent / 100);
             var updatePayload = new ProductUpdate { Price = newPrice };
