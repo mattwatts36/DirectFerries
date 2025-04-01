@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DirectFerries.Models
 {
-    public class Product
+     internal class Product
     {
         public int Id { get; set; }
         public string Brand { get; set; }

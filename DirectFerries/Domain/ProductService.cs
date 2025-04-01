@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using DirectFerries.Models;
 
-public class ProductService
+internal class ProductService
 {
     private readonly HttpClient _client;
     private readonly string _baseUrl;
@@ -65,7 +65,7 @@ public class ProductService
         }
 
         Console.WriteLine("\nUpdated Smartphone Prices:");
-        foreach (var phone in top3)
+        foreach (var phone in topThreeMostExpensiveProducts)
         {
             Console.WriteLine($"{phone.Brand} - {phone.Title} - ${phone.Price * (1 + percent / 100)}");
         }
@@ -75,6 +75,7 @@ public class ProductService
     {
         var logMessage = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
         Console.WriteLine(logMessage);
+        //The log gets saved in bin\Debug\net6.0
         File.AppendAllText("log.txt", logMessage + Environment.NewLine);
     }
 }
