@@ -18,5 +18,8 @@ Three of them are provided here for ease of use:
 
 ## Logging
 
-The logging file (`log.txt`) is created under the following location when running the project:
+A log file (`log.txt`) is automatically generated when the application runs.  
+Each entry includes a timestamp and the logged message.
 
+The file is located at:  
+`bin\Debug\net6.0\`
