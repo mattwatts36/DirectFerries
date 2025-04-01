@@ -13,22 +13,20 @@ public class ProductService
         _baseUrl = baseUrl;
     }
 
-    public async Task RunAsync()
+    public async Task ProcessProductsAsync()
     {       
-        var top3 =  await GetTop3ExpensiveProducts();
+        var topThreeMostExpensiveProducts =  await GetTopThreeMostExpensiveProducts();
 
-        foreach (var p in top3)
+        foreach (var p in topThreeMostExpensiveProducts)
         {
             Console.WriteLine($"{p.Brand} - {p.Title} - ${p.Price}");
         }
 
-        await UpdateTop3(top3);
+        await UpdateTopThreeMostExpensiveProducts(topThreeMostExpensiveProducts);
     }
 
-    public async Task<List<Product>> GetTop3ExpensiveProducts()
+    public async Task<List<Product>> GetTopThreeMostExpensiveProducts()
     {
-        List<Product> products = new List<Product>();
-
         Console.WriteLine("\nTop 3 Expensive Smartphones:");
         Log("Fetching products...");
         var productResponse = await _client.GetAsync($"{_baseUrl}/auth/products");
@@ -36,13 +34,13 @@ public class ProductService
         Log("Product response: " + productResponse.StatusCode);
 
         var productList = JsonConvert.DeserializeObject<ProductList>(productJson);
-        var top3 = productList?.Products.OrderByDescending(p => p.Price).Take(3).ToList();
+        var topThreeMostExpensiveProducts = productList?.Products.OrderByDescending(p => p.Price).Take(3).ToList();
 
-        return top3;
+        return topThreeMostExpensiveProducts;
     }
 
 
-    public async Task UpdateTop3(List<Product> top3)
+    public async Task UpdateTopThreeMostExpensiveProducts(List<Product> top3)
     {
         Console.WriteLine("\nEnter percentage to increase prices:");
         var percentStr = Console.ReadLine();

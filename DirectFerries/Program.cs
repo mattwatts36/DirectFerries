@@ -8,5 +8,5 @@ var client = await login.AuthenticateAsync();
 if (client != null)
 {
     var product = new ProductService(client, baseUrl);
-    await product.RunAsync();
+    await product.ProcessProductsAsync();
 }
