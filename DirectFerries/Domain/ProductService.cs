@@ -14,21 +14,36 @@ public class ProductService
     }
 
     public async Task RunAsync()
+    {       
+        var top3 =  await GetTop3ExpensiveProducts();
+
+        foreach (var p in top3)
+        {
+            Console.WriteLine($"{p.Brand} - {p.Title} - ${p.Price}");
+        }
+
+        await UpdateTop3(top3);
+    }
+
+    public async Task<List<Product>> GetTop3ExpensiveProducts()
     {
+        List<Product> products = new List<Product>();
+
+        Console.WriteLine("\nTop 3 Expensive Smartphones:");
         Log("Fetching products...");
         var productResponse = await _client.GetAsync($"{_baseUrl}/auth/products");
         var productJson = await productResponse.Content.ReadAsStringAsync();
         Log("Product response: " + productResponse.StatusCode);
 
         var productList = JsonConvert.DeserializeObject<ProductList>(productJson);
-        var top3 = productList.Products.OrderByDescending(p => p.Price).Take(3).ToList();
+        var top3 = productList?.Products.OrderByDescending(p => p.Price).Take(3).ToList();
 
-        Console.WriteLine("\nTop 3 Expensive Smartphones:");
-        foreach (var p in top3)
-        {
-            Console.WriteLine($"{p.Brand} - {p.Title} - ${p.Price}");
-        }
+        return top3;
+    }
 
+
+    public async Task UpdateTop3(List<Product> top3)
+    {
         Console.WriteLine("\nEnter percentage to increase prices:");
         var percentStr = Console.ReadLine();
         if (!decimal.TryParse(percentStr, out decimal percent))
